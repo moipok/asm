@@ -4,15 +4,20 @@ section .text
 _ft_strcpy: 
 	xor rax, rax
 	test rsi, rsi
-	jz re
+	jz error
+	test rdi, rdi
+	jz error
 loop:
-	cmp byte[rdi + rax], 0
+	cmp byte[rsi + rax], 0
 	jz re
-	mov bh, byte[rdi + rax]
-	mov byte[rsi + rax], bh
+	mov bh, byte[rsi + rax]
+	mov byte[rdi + rax], bh
 	inc rax
 	jmp loop
 re:
-	mov byte[rsi + rax], 0
-	mov rax, rsi
+	mov byte[rdi + rax], 0
+	mov rax, rdi
+	ret
+error:
+	mov	rax, 0
 	ret
